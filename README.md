@@ -1,3 +1,2 @@
 # team-project
-なんか作る
-ああああ
+https://mccopilot.github.io/team-project/
