@@ -3,170 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIKAKIN ファンサイト</title>
+    <title>五目並べ</title>
     <style>
-        /* シンプルなCSSでデザインを整えます */
+        /* 全体のスタイル */
         body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #77aaff 3px solid;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        main {
-            padding: 20px 0;
-        }
-        .section {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .section h2 {
-            color: #333;
-            border-bottom: 2px solid #f4f4f4;
-            padding-bottom: 10px;
-        }
-        #profile {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 20px;
-        }
-        #profile img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border: 3px solid #77aaff;
-        }
-        #profile-info ul {
-            list-style: none;
-            padding: 0;
-        }
-        #profile-info li {
-            padding: 5px 0;
-        }
-        .channel-list .channel {
-            margin-bottom: 15px;
-        }
-        .channel-list h3 {
-            margin: 0 0 5px 0;
-        }
-        .channel-list a {
-            text-decoration: none;
-            color: #77aaff;
-            font-weight: bold;
-        }
-        .channel-list a:hover {
-            text-decoration: underline;
-        }
-        .social-links ul {
-            list-style: none;
-            padding: 0;
-        }
-        .social-links li {
-            display: inline-block;
-            margin-right: 15px;
-        }
-        .social-links a {
-            text-decoration: none;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
             color: #333;
-            font-size: 1.2em;
         }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #333;
-            color: #fff;
+
+        h1 {
+            color: #2c3e50;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* ゲーム情報表示エリア */
+        #game-info {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            height: 30px; /* メッセージの切り替えでレイアウトが崩れないように高さを固定 */
+        }
+
+        /* 盤面の外枠 */
+        #board-wrapper {
+            padding: 15px;
+            background-color: #dcb35c; /* 碁盤の色 */
+            border: 3px solid #a07a34;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 盤面本体 */
+        #board {
+            display: grid;
+            grid-template-columns: repeat(15, 32px);
+            grid-template-rows: repeat(15, 32px);
+            background-color: #dcb35c;
+            border: 2px solid #333;
+            position: relative;
+        }
+
+        /* 格子線 */
+        .grid-line {
+            position: absolute;
+            background-color: #333;
+            z-index: 0;
+        }
+        .horizontal {
+            width: 100%;
+            height: 1px;
+            left: 0;
+        }
+        .vertical {
+            height: 100%;
+            width: 1px;
+            top: 0;
+        }
+
+        /* 星（盤上の目印） */
+        .star-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        /* 石を置くマス */
+        .cell {
+            box-sizing: border-box;
+            cursor: pointer;
+            position: relative;
+            z-index: 1; /* 石やクリック判定を格子線より手前に */
+        }
+
+        /* 石のスタイル */
+        .stone {
+            width: 28px; /* セルのサイズより少し小さく */
+            height: 28px;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .black {
+            background: radial-gradient(circle at 8px 8px, #666, #000);
+        }
+
+        .white {
+            background: radial-gradient(circle at 8px 8px, #fff, #ddd);
+        }
+
+        /* リセットボタン */
+        #reset-button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #reset-button:hover {
+            background-color: #2980b9;
+        }
+        #reset-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* スマートフォン向けのレスポンシブ対応 */
+        @media (max-width: 550px) {
+            #board {
+                grid-template-columns: repeat(15, 22px);
+                grid-template-rows: repeat(15, 22px);
+            }
+            .stone {
+                width: 20px;
+                height: 20px;
+            }
+            .star-point {
+                width: 6px;
+                height: 6px;
+            }
+            #game-info {
+                font-size: 1.2em;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
 <body>
+    <h1>五目並べ ⚪⚫</h1>
+    <div id="game-info">
+        <p id="status">黒の番です</p>
+    </div>
+    <div id="board-wrapper">
+        <div id="board"></div>
+    </div>
+    <button id="reset-button">もう一回</button>
 
-    <header>
-        <div class="container">
-            <h1>HIKAKIN - 日本のトップクリエイター</h1>
-        </div>
-    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const BOARD_SIZE = 15;
+            const boardElement = document.getElementById('board');
+            const statusElement = document.getElementById('status');
+            const resetButton = document.getElementById('reset-button');
 
-    <main class="container">
-        <section id="profile" class="section">
-            <img src="hikakin.jpg" alt="ヒカキンのプロフィール写真">
-            <div id="profile-info">
-                <h2>プロフィール</h2>
-                <ul>
-                    <li><strong>氏名:</strong> 開発 光 (かいはつ ひかる)</li>
-                    <li><strong>生年月日:</strong> 1989年4月21日</li>
-                    <li><strong>出身地:</strong> 新潟県妙高市</li>
-                    <li><strong>活動:</strong> YouTuber、ヒューマンビートボクサー、UUUMファウンダー兼最高顧問</li>
-                </ul>
-            </div>
-        </section>
+            let boardState = [];
+            let currentPlayer = 'black'; // 'black' or 'white'
+            let gameOver = false;
 
-        <section id="about" class="section">
-            <h2>ヒカキンとは？</h2>
-            <p>
-                HIKAKIN（ヒカキン）は、日本のYouTube界を牽引するトップクリエイターです。高校生の頃からヒューマンビートボックスで注目を集め、その動画をYouTubeに投稿したことからキャリアをスタートさせました。
-            </p>
-            <p>
-                現在では、商品レビュー、ゲーム実況、実験、社会貢献活動など、ジャンルにとらわれない多彩な動画で、子どもから大人まで幅広い層に絶大な人気を誇っています。彼の動画は常に視聴者を楽しませる工夫に満ちており、その誠実で親しみやすい人柄も魅力の一つです。
-            </p>
-        </section>
+            // ゲームの初期化
+            function initGame() {
+                boardState = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
+                boardElement.innerHTML = '';
+                gameOver = false;
+                currentPlayer = 'black';
+                statusElement.textContent = '黒の番です';
+                statusElement.style.color = '#333';
 
-        <section id="channels" class="section">
-            <h2>主なYouTubeチャンネル</h2>
-            <div class="channel-list">
-                <div class="channel">
-                    <h3><a href="https://www.youtube.com/user/HikakinTV" target="_blank">HikakinTV</a></h3>
-                    <p>メインチャンネル。商品レビューや面白い実験、日常の出来事などを投稿。</p>
-                </div>
-                <div class="channel">
-                    <h3><a href="https://www.youtube.com/user/HikakinGames" target="_blank">HikakinGames</a></h3>
-                    <p>ゲーム実況専門チャンネル。様々な人気ゲームをプレイしている。</p>
-                </div>
-                <div class="channel">
-                    <h3><a href="https://www.youtube.com/user/HIKAKIN" target="_blank">HIKAKIN</a></h3>
-                    <p>原点であるヒューマンビートボックスや音楽関連の動画を投稿。</p>
-                </div>
-                <div class="channel">
-                    <h3><a href="https://www.youtube.com/user/HikakinBlog" target="_blank">HikakinBlog</a></h3>
-                    <p>飼い猫の「まるお」と「もふこ」との日常を綴るチャンネル。</p>
-                </div>
-            </div>
-        </section>
+                createBoard();
+            }
 
-        <section id="links" class="section social-links">
-            <h2>関連リンク</h2>
-            <ul>
-                <li><a href="https://twitter.com/hikakin" target="_blank">X (旧Twitter)</a></li>
-                <li><a href="https://www.instagram.com/hikakin/" target="_blank">Instagram</a></li>
-            </ul>
-        </section>
-    </main>
+            // 盤面のHTML要素を生成
+            function createBoard() {
+                // 格子線を描画
+                for (let i = 1; i < BOARD_SIZE - 1; i++) {
+                    const hLine = document.createElement('div');
+                    hLine.className = 'grid-line horizontal';
+                    hLine.style.top = `calc(${i} * (100% / ${BOARD_SIZE - 1}))`;
+                    boardElement.appendChild(hLine);
 
-    <footer>
-        <p>&copy; 2025 HIKAKIN ファンサイト. All Rights Reserved.</p>
-    </footer>
+                    const vLine = document.createElement('div');
+                    vLine.className = 'grid-line vertical';
+                    vLine.style.left = `calc(${i} * (100% / ${BOARD_SIZE - 1}))`;
+                    boardElement.appendChild(vLine);
+                }
 
+                // 星（目印の点）を配置
+                const starPoints = [
+                    {row: 3, col: 3}, {row: 3, col: 11},
+                    {row: 7, col: 7},
+                    {row: 11, col: 3}, {row: 11, col: 11}
+                ];
+                starPoints.forEach(p => {
+                    const star = document.createElement('div');
+                    star.className = 'star-point';
+                    star.style.top = `calc(${p.row} * (100% / ${BOARD_SIZE - 1}))`;
+                    star.style.left = `calc(${p.col} * (100% / ${BOARD_SIZE - 1}))`;
+                    boardElement.appendChild(star);
+                });
+                
+                // クリック用のセルを配置
+                for (let row = 0; row < BOARD_SIZE; row++) {
+                    for (let col = 0; col < BOARD_SIZE; col++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.dataset.row = row;
+                        cell.dataset.col = col;
+                        cell.addEventListener('click', handleCellClick);
+                        boardElement.appendChild(cell);
+                    }
+                }
+            }
+
+            // セルクリック時の処理
+            function handleCellClick(event) {
+                if (gameOver) return;
+
+                const row = parseInt(event.target.dataset.row);
+                const col = parseInt(event.target.dataset.col);
+
+                if (boardState[row][col]) {
+                    return; // すでに石がある場合は何もしない
+                }
+
+                placeStone(row, col);
+
+                if (checkWin(row, col)) {
+                    gameOver = true;
+                    const winner = currentPlayer === 'black' ? '黒' : '白';
+                    statusElement.textContent = `${winner}の勝ちです！🎉`;
+                    statusElement.style.color = '#e74c3c';
+                } else if (isBoardFull()) {
+                    gameOver = true;
+                    statusElement.textContent = '引き分けです';
+                } else {
+                    switchPlayer();
+                }
+            }
+
+            // 石を置く
+            function placeStone(row, col) {
+                boardState[row][col] = currentPlayer;
+                const cell = boardElement.querySelector(`[data-row='${row}'][data-col='${col}']`);
+                const stone = document.createElement('div');
+                stone.className = `stone ${currentPlayer}`;
+                cell.appendChild(stone);
+            }
+
+            // プレイヤーを交代
+            function switchPlayer() {
+                currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+                const nextPlayer = currentPlayer === 'black' ? '黒' : '白';
+                statusElement.textContent = `${nextPlayer}の番です`;
+            }
+
+            // 勝利判定
+            function checkWin(row, col) {
+                const directions = [
+                    { r: 0, c: 1 },  // 横
+                    { r: 1, c: 0 },  // 縦
+                    { r: 1, c: 1 },  // 右下がり斜め
+                    { r: 1, c: -1 }  // 左下がり斜め
+                ];
+
+                for (const dir of directions) {
+                    let count = 1;
+                    // 正方向
+                    for (let i = 1; i < 5; i++) {
+                        const newRow = row + i * dir.r;
+                        const newCol = col + i * dir.c;
+                        if (isValid(newRow, newCol) && boardState[newRow][newCol] === currentPlayer) {
+                            count++;
+                        } else {
+                            break;
+                        }
+                    }
+                    // 負方向
+                    for (let i = 1; i < 5; i++) {
+                        const newRow = row - i * dir.r;
+                        const newCol = col - i * dir.c;
+                        if (isValid(newRow, newCol) && boardState[newRow][newCol] === currentPlayer) {
+                            count++;
+                        } else {
+                            break;
+                        }
+                    }
+                    if (count >= 5) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            // 引き分け判定
+            function isBoardFull() {
+                return boardState.every(row => row.every(cell => cell !== null));
+            }
+
+            // 座標が盤面内かチェック
+            function isValid(row, col) {
+                return row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
+            }
+
+            // リセットボタンのイベントリスナー
+            resetButton.addEventListener('click', initGame);
+
+            // ゲーム開始
+            initGame();
+        });
+    </script>
 </body>
 </html>
