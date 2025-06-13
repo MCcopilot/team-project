@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIKAKIN ファンサイト</title>
+    <style>
+        /* シンプルなCSSでデザインを整えます */
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77aaff 3px solid;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            padding: 20px 0;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #333;
+            border-bottom: 2px solid #f4f4f4;
+            padding-bottom: 10px;
+        }
+        #profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        #profile img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #77aaff;
+        }
+        #profile-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        #profile-info li {
+            padding: 5px 0;
+        }
+        .channel-list .channel {
+            margin-bottom: 15px;
+        }
+        .channel-list h3 {
+            margin: 0 0 5px 0;
+        }
+        .channel-list a {
+            text-decoration: none;
+            color: #77aaff;
+            font-weight: bold;
+        }
+        .channel-list a:hover {
+            text-decoration: underline;
+        }
+        .social-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .social-links li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .social-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>HIKAKIN - 日本のトップクリエイター</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="profile" class="section">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_k-nRIx-i_sE4n_4-n0nZ-aD0kX-pQzJz_g-A=s900-c-k-c0x00ffffff-no-rj" alt="ヒカキンのプロフィール写真">
+            <div id="profile-info">
+                <h2>プロフィール</h2>
+                <ul>
+                    <li><strong>氏名:</strong> 開発 光 (かいはつ ひかる)</li>
+                    <li><strong>生年月日:</strong> 1989年4月21日</li>
+                    <li><strong>出身地:</strong> 新潟県妙高市</li>
+                    <li><strong>活動:</strong> YouTuber、ヒューマンビートボクサー、UUUMファウンダー兼最高顧問</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>ヒカキンとは？</h2>
+            <p>
+                HIKAKIN（ヒカキン）は、日本のYouTube界を牽引するトップクリエイターです。高校生の頃からヒューマンビートボックスで注目を集め、その動画をYouTubeに投稿したことからキャリアをスタートさせました。
+            </p>
+            <p>
+                現在では、商品レビュー、ゲーム実況、実験、社会貢献活動など、ジャンルにとらわれない多彩な動画で、子どもから大人まで幅広い層に絶大な人気を誇っています。彼の動画は常に視聴者を楽しませる工夫に満ちており、その誠実で親しみやすい人柄も魅力の一つです。
+            </p>
+        </section>
+
+        <section id="channels" class="section">
+            <h2>主なYouTubeチャンネル</h2>
+            <div class="channel-list">
+                <div class="channel">
+                    <h3><a href="https://www.youtube.com/user/HikakinTV" target="_blank">HikakinTV</a></h3>
+                    <p>メインチャンネル。商品レビューや面白い実験、日常の出来事などを投稿。</p>
+                </div>
+                <div class="channel">
+                    <h3><a href="https://www.youtube.com/user/HikakinGames" target="_blank">HikakinGames</a></h3>
+                    <p>ゲーム実況専門チャンネル。様々な人気ゲームをプレイしている。</p>
+                </div>
+                <div class="channel">
+                    <h3><a href="https://www.youtube.com/user/HIKAKIN" target="_blank">HIKAKIN</a></h3>
+                    <p>原点であるヒューマンビートボックスや音楽関連の動画を投稿。</p>
+                </div>
+                <div class="channel">
+                    <h3><a href="https://www.youtube.com/user/HikakinBlog" target="_blank">HikakinBlog</a></h3>
+                    <p>飼い猫の「まるお」と「もふこ」との日常を綴るチャンネル。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="links" class="section social-links">
+            <h2>関連リンク</h2>
+            <ul>
+                <li><a href="https://twitter.com/hikakin" target="_blank">X (旧Twitter)</a></li>
+                <li><a href="https://www.instagram.com/hikakin/" target="_blank">Instagram</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 HIKAKIN ファンサイト. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
