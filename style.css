@@ -33,3 +33,7 @@ body {
     color: #444444;
     text-decoration: none;
   }
+  .content {
+    width: 70%;
+    margin: 10px 0 10px 0;
+  }
