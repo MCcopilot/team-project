@@ -37,3 +37,11 @@ body {
     width: 70%;
     margin: 10px 0 10px 0;
   }
+  .content h2 {
+    margin: 20px 10px 10px 10px;
+    border-bottom: solid 1px #cccccc;
+    color: #444444;
+  }
+  .content p {
+    margin: 0 10px 10px 20px;
+  }
