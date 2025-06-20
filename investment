@@ -1,0 +1,83 @@
+function generatePriceSeries(days, startPrice = 100, volatility = 2) {
+  const prices = [startPrice];
+  for (let i = 1; i < days; i++) {
+    // ランダムウォーク：前日比±volatility の範囲で乱数)
+    const change = (Math.random() * 2 - 1) * volatility;
+    const newPrice = Math.max(1, prices[i - 1] + change);
+    prices.push(newPrice);
+  }
+  return prices;
+}
+
+// -----------------------------------------------------------------------------
+// 2) 単純移動平均線（SMA：Simple Moving Average）を計算する関数
+// -----------------------------------------------------------------------------
+function calcSMA(data, period) {
+  const sma = [];
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += data[i];
+    if (i >= period) {
+      sum -= data[i - period];
+    }
+    sma.push(i >= period - 1 ? sum / period : null);
+  }
+  return sma;
+}
+
+// -----------------------------------------------------------------------------
+// 3) シミュレーター本体 ― 短期/長期MAのクロスで売買シグナル
+// -----------------------------------------------------------------------------
+function runBacktest(prices, shortPeriod = 5, longPeriod = 20, initialCash = 100000) {
+  const shortMA = calcSMA(prices, shortPeriod);
+  const longMA = calcSMA(prices, longPeriod);
+
+  let cash = initialCash;
+  let position = 0; // 保有株数
+  const history = []; // 日々の資産推移を記録
+
+  for (let i = 1; i < prices.length; i++) {
+    // 前日・当日のMAを見てゴールデンクロス／デッドクロスを判定
+    const prevShort = shortMA[i - 1], prevLong = longMA[i - 1];
+    const curShort = shortMA[i], curLong = longMA[i];
+
+    if (prevShort !== null && prevLong !== null && curShort !== null && curLong !== null) {
+      // ゴールデンクロス：短期が長期を下→上に抜けたら「買い」
+      if (prevShort < prevLong && curShort >= curLong && cash > 0) {
+        // できる限り全額を投入（手数料等なし）
+        position = cash / prices[i];
+        cash = 0;
+        history.push({ day: i, action: "BUY", price: prices[i], cash, position });
+      }
+      // デッドクロス：短期が長期を上→下に抜けたら「売り」
+      else if (prevShort > prevLong && curShort <= curLong && position > 0) {
+        cash = position * prices[i];
+        position = 0;
+        history.push({ day: i, action: "SELL", price: prices[i], cash, position });
+      }
+    }
+
+    // 資産評価額（株価×株数＋現金）
+    const nav = cash + position * prices[i];
+    history.push({ day: i, action: "HOLD", price: prices[i], cash, position, nav });
+  }
+
+  return { finalNAV: cash + position * prices[prices.length - 1], history };
+}
+
+// -----------------------------------------------------------------------------
+// 4) 実行例
+// -----------------------------------------------------------------------------
+(function main() {
+  const days = 200;                 // シミュレーション日数
+  const prices = generatePriceSeries(days);
+  const result = runBacktest(prices, 5, 20, 100000);
+
+  console.log(`最終資産額: ${result.finalNAV.toFixed(2)} 円`);
+  console.log("売買履歴（一部抜粋）:");
+  result.history
+    .filter((h) => h.action === "BUY" || h.action === "SELL")
+    .forEach((h) =>
+      console.log(`Day ${h.day}: ${h.action} @${h.price.toFixed(2)} | cash=${h.cash.toFixed(2)}, pos=${h.position.toFixed(4)}`)
+    );
+})();
