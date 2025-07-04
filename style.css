@@ -71,6 +71,28 @@ body {
     display: none;
 }
 
+.welcome-title {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.welcome-subtitle {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.welcome-line {
+  height: 3px;
+  background-color: #000000;
+  width: 100%;
+  border: none;
+}
+
 .content h2 {
     margin: 20px 10px 10px 10px;
     border-bottom: solid 1px #cccccc;
