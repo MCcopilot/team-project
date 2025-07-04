@@ -6,73 +6,92 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="title">赤羽について~</h1>
+    <img id="top-image" src="imgs/akabanenosusume.jpg" alt="赤羽のすすめ">
+    
     <div id="container">
         <div class="sidebar">
+            <h1 id="title">赤羽のすすめ</h1>
             <ul>
-                <li><a href="#id1">カフェ</a></li>
-                <li><a href="#id2">食事処</a></li>
-                <li><a href="#id3">買い物</a></li>
-                <li><a href="#id4">公園</a></li>
-                <li><a href="#id5">お知らせ</a></li>
+                <li><a href="#id5" class="tab-link active-link">メインページ</a></li>
+                <li><a href="#id1" class="tab-link">カフェ</a></li>
+                <li><a href="#id2" class="tab-link">食事処</a></li>
+                <li><a href="#id3" class="tab-link">買い物</a></li>
+                <li><a href="#id4" class="tab-link">公園</a></li>
+                <li><a href="map.html">INIAD周辺マップ</a></li>
             </ul>
         </div>
-    </div>
-    <div class="content">
-        <div>
-            <h2 id="id1">カフェ</h2>
-            <img src="" alt="カフェの写真">
-            <p>スターバックスコーヒー</p>
-            <p>
-                ここに説明を書く
-            </p>
-            <img src="" alt="カフェの写真">
-            <p>星乃珈琲店</p>
-            <p>
-                ここに説明を書く
-            </p>
-            <img src="" alt="カフェの写真">
-            <p>BECK'S COFFEE SHOP</p>
-            </p>
-        </div>
-        <div>
-            <h2 id="id2">食事処</h2>
-            <img src="" alt="店の写真">
-            <p>吟風 赤羽店</p>
-            <p>
-                吟風 赤羽店は、JR赤羽駅南口から徒歩約2分の場所にある、豚骨魚介つけ麺の専門店です。店内はカウンター席がメインで、一人でも気軽に立ち寄れる雰囲気。券売機で食券を購入するスタイルです。
-            </p>
-            <a href="https://a321510.gorp.jp/">吟風のホームページ</a>
-        </div>
-        <div>
-            <h2 id="id3">買い物</h2>
-            <img src="" alt="買いものの写真">
-            <p>店の説明</p>
-            <p>
-                ここに説明を書く
-            </p>
-        </div>
-        <div>
-            <h2 id="id4">公園</h2>
-            <img src="" alt="公園の写真">
-            <p>赤羽公園</p>
-            <p>
-                赤羽公園は赤羽駅から徒歩5分広さ11,000平方メートルの大きな区立公園です。
-                キリンの滑り台がある小さな公園部分と、噴水と時計台がある広場、砂場のある公園部分の３つがあります。
-                噴水のある広場では春秋の植木市や、フリーマーケットなどが行われています。
-            </p>
-            <a href="http://kanko.city.kita.lg.jp/spot/1325-2/">赤羽東公園のページ</a>
+
+        <div class="content">
+            <div id="id1" class="tab-content">
+                <h2>カフェ</h2>
+                <img src="" alt="カフェの写真">
+                <p>スターバックスコーヒー</p>
+                <p>ここに説明を書く</p>
+                <img src="" alt="カフェの写真">
+                <p>星乃珈琲店</p>
+                <p>ここに説明を書く</p>
+                <img src="" alt="カフェの写真">
+                <p>BECK'S COFFEE SHOP</p>
+            </div>
+
+            <div id="id2" class="tab-content">
+                <h2>食事処</h2>
+                <img src="" alt="店の写真">
+                <p>吟風 赤羽店</p>
+                <p>
+                    吟風 赤羽店は、JR赤羽駅南口から徒歩約2分の場所にある、豚骨魚介つけ麺の専門店です。店内はカウンター席がメインで、一人でも気軽に立ち寄れる雰囲気。券売機で食券を購入するスタイルです。
+                </p>
+                <a href="https://a321510.gorp.jp/">吟風のホームページ</a>
+            </div>
+
+            <div id="id3" class="tab-content">
+                <h2>買い物</h2>
+                <img src="" alt="買いものの写真">
+                <p>店の説明</p>
+                <p>ここに説明を書く</p>
+            </div>
+
+            <div id="id4" class="tab-content">
+                <h2>公園</h2>
+                <img src="" alt="公園の写真">
+                <p>赤羽公園</p>
+                <p>
+                    赤羽公園は赤羽駅から徒歩5分広さ11,000平方メートルの大きな区立公園です。
+                    キリンの滑り台がある小さな公園部分と、噴水と時計台がある広場、砂場のある公園部分の３つがあります。
+                    噴水のある広場では春秋の植木市や、フリーマーケットなどが行われています。
+                </p>
+                <a href="http://kanko.city.kita.lg.jp/spot/1325-2/">赤羽東公園のページ</a>
+            </div>
+            
+            <div id="id5" class="tab-content info infoset"  style="display: block;">
+                <h2>お知らせ</h2>
+                <p>赤羽ラーメン粋が改装中です</p>
+            </div>
         </div>
     </div>
 
-    <div class="info infoset">
-    <h2 id="id5">お知らせ</h2>
-    <p>赤羽ラーメン粋が改装中です</p>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.sidebar .tab-link');
+            const tabContents = document.querySelectorAll('.content .tab-content');
 
-    <div class="tomap">
-    <p><a href="map.html">地図(仮)</a></p>
-    </div>
+            tabLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    tabLinks.forEach(l => l.classList.remove('active-link'));
+                    event.currentTarget.classList.add('active-link');
+                    
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    
+                    const targetId = event.currentTarget.getAttribute('href');
+                    document.querySelector(targetId).style.display = 'block';
+                });
+            });
+        });
+    </script>
     
 </body>
 </html>
