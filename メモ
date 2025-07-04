@@ -1,2 +1,42 @@
 画像の貼り方はtest.htmlを参照してください。
 わからなければgoogle geminiに聞いて
+
+.welcome-title {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.welcome-subtitle {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.welcome-line {
+  height: 3px;
+  background-color: #000000;
+  width: 100%;
+  border: none;
+}
+
+
+            <div id="id5" class="tab-content" style="display: block;">
+
+                            <p class="welcome-title">「赤羽のすすめ」へようこそ！</p>
+                            <p class="welcome-subtitle">魅力的な街、赤羽を紹介するサイトです。</p>
+                            <hr class="welcome-line">
+                            
+                            <div class="info infoset">
+                                <h2>赤羽ニュース</h2>
+                                <p>エキュート赤羽でスイーツが期間限定出店中！　7/13まで　<a href="https://www.ecute.jp/akabane/">公式ページへ</a></p>
+                                <hr>
+                                <p>赤羽構内に「舎鈴」が復活！　期間限定の冷かけがおすすめ。</p>
+                                <hr>
+                                <p></p>
+                            </div>
+
+                        </div>
